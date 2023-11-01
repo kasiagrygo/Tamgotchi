@@ -1,4 +1,5 @@
 ﻿using System;
+using Tamgotchi;
 
 namespace Tamagotchi
 {
@@ -6,10 +7,8 @@ namespace Tamagotchi
     {
         static void Main(string[] args)
         {
-            Console.Clear();
-            Console.WriteLine("Tamagotchi");
-            Console.WriteLine("Start");
-            Console.WriteLine("Koniec");
+           Game myGame = new Game();
+           myGame.Start();
         }
     }
 }
