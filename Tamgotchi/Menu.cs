@@ -26,22 +26,19 @@ namespace Tamgotchi
             for(int i = 0; i < Options.Length; i++)
             {
                 string currentOptions = Options[i];
-                string prefix;
 
                 if(i == SelectedIndex)
                 {
-                    prefix = "*";
                     ForegroundColor = ConsoleColor.Black;
                     BackgroundColor = ConsoleColor.White;      
                 }
                 else
                 {
-                    prefix = " ";
                     ForegroundColor = ConsoleColor.White;
                     BackgroundColor = ConsoleColor.Black;
 
                 }
-                WriteLine($"{prefix} << {currentOptions} >>");
+                WriteLine($"{currentOptions} ");
             }
             ResetColor();
         }
