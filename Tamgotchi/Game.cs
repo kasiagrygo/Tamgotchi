@@ -69,8 +69,18 @@ namespace Tamgotchi
 ─▄▄──█░░░▀█▀░░░█──▄▄─
 █░░█─▀▄░░░░░░░▄▀─█░░█"};
 
-            Menu mainMenu = new Menu(prompt, options);
-            int chooseCharacter = mainMenu.Run();
+            Menu chooseMenu = new Menu(prompt, options);
+            int selectedIndex = chooseMenu.Run();
+
+            switch (selectedIndex)
+            {
+                case 0:
+                    Clear();
+                    break;
+                case 1:
+                    Clear();
+                    break;
+            }
 
             ReadKey(true);
             RunMainMenu();

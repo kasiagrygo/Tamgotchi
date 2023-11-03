@@ -45,6 +45,7 @@ namespace Tamgotchi
         public int Run()
         {
             ConsoleKey keyPressed;
+
             do
             {
                 Clear();
@@ -61,7 +62,7 @@ namespace Tamgotchi
                         SelectedIndex = Options.Length - 1;
                     }
                 }
-                if (keyPressed == ConsoleKey.DownArrow)
+                else if (keyPressed == ConsoleKey.DownArrow)
                 {
                     SelectedIndex++;
                     if (SelectedIndex == Options.Length)
