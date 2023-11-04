@@ -15,7 +15,7 @@ namespace Tamagotchi
 
             var top = Application.Top;
 
-            Kitty kitty = new Kitty();
+            
 
             Window mainWindow = new Window("Tamagotchi")
             {
@@ -69,7 +69,7 @@ namespace Tamagotchi
                     X = 10,
                     Y = 1,
                     Width = Dim.Percent(35),
-                    Fraction = kitty.play,
+                    
                     
                 };
 
@@ -78,7 +78,7 @@ namespace Tamagotchi
                     X = Pos.Right(progressBarPlay) + 10,
                     Y = 1,
                     Width = Dim.Percent(35),
-                    Fraction = kitty.shower
+                    
                 };
 
                 
@@ -87,7 +87,7 @@ namespace Tamagotchi
                     X = 10,
                     Y = 3,
                     Width = Dim.Percent(35),
-                    Fraction = kitty.eat
+                    
                 };
 
                 ProgressBar progressBarSleep = new ProgressBar()
@@ -95,8 +95,11 @@ namespace Tamagotchi
                     X = Pos.Right(progressBarEat) + 10,
                     Y = 3,
                     Width = Dim.Percent(35),
-                    Fraction = kitty.sleep
+                   
                 };
+                Kitty kitty = new Kitty(progressBarPlay);
+
+                progressBarPlay.Fraction = kitty.play;
 
                 gameWindow.Add(progressBarPlay);
                 gameWindow.Add(progressBarShower);
@@ -162,14 +165,8 @@ namespace Tamagotchi
 
             top.Add(mainWindow);
 
-            Application.MainLoop.Invoke(() =>
-            {
-                while (true)
-                {
-                    kitty.play -= 0.1F;
-                    Thread.Sleep(1000);
-                }
-            });
+            Application.MainLoop.AddTimeout(TimeSpan.FromMilliseconds(500), loop => true);
+            
             Application.Run();
         }
     }

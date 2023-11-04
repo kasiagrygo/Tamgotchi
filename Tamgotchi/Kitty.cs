@@ -16,14 +16,17 @@ namespace Tamgotchi
         public float eat { get; set; }
     
         public float sleep {  get; set; }
-
-        public Kitty()
+        private ProgressBar PlayBar { get; set; }
+        public Kitty(ProgressBar playBar)
         {
             play = 1f; 
             shower = 1f; 
             eat = 1f; 
             sleep = 1f;
-            //TimeLoop();
+
+            PlayBar = playBar;
+
+            TimeLoop();
         }
 
         private void TimeLoop()
@@ -32,9 +35,9 @@ namespace Tamgotchi
             {
                 while (true)
                 {
-                    
-                    Application.Refresh();
 
+                    play -= 0.1F;
+                    Application.MainLoop.Invoke(() => { PlayBar.SetChildNeedsDisplay(); });
                     Thread.Sleep(3000);
                 }
             }).Start();
