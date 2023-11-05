@@ -45,6 +45,22 @@ namespace Tamgotchi
             Loop();
         }
 
+        public Label KittyDraw()
+        {
+            Label kittyLabel = new Label(@"
+  ^~^
+ ('Y') )
+ /   \/
+(\|||/)")
+            {
+                X = Pos.Center(),
+                Y = 13
+            };
+
+            return kittyLabel;
+
+        }
+
         private void Loop()
         {
             Thread thread = new(() =>
@@ -54,17 +70,26 @@ namespace Tamgotchi
                 while(true)
                 {
                     play -= 0.01f;
-                    shower -= 0.01f;
-                    eat -= 0.02f;
-                    sleep -= 0.01f;
+                    shower -= 0.004f;
+                    eat -= 0.007f;
+                    sleep -= 0.001f;
 
                     PlayBar.Fraction = play;
                     ShowerBar.Fraction = shower;
                     EatBar.Fraction = eat;
                     SleepBar.Fraction = sleep;
 
+                    try
+                    {
+                        typeof(Application).GetMethod("TerminalResized", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, null);
+                    }
+                    catch(Exception e)
+                    {
+
+                    } 
+
                     //Workaround żeby UI się aktuzalizował
-                    typeof(Application).GetMethod("TerminalResized", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, null);
+                    
                     Thread.Sleep(2000);
                 }
             });

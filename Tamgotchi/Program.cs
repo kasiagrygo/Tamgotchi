@@ -66,7 +66,7 @@ namespace Tamagotchi
                 ProgressBar progressBarPlay = new ProgressBar()
                 {
                     X = 10,
-                    Y = 1,
+                    Y = 2,
                     Width = Dim.Percent(35),
                     ProgressBarStyle = ProgressBarStyle.Continuous,
                     ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage
@@ -75,7 +75,7 @@ namespace Tamagotchi
                 ProgressBar progressBarShower = new ProgressBar()
                 {
                     X = Pos.Right(progressBarPlay) + 10,
-                    Y = 1,
+                    Y = 2,
                     Width = Dim.Percent(35),
                     ProgressBarStyle = ProgressBarStyle.Continuous,
                     ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage
@@ -84,7 +84,7 @@ namespace Tamagotchi
                 ProgressBar progressBarEat = new ProgressBar()
                 {
                     X = 10,
-                    Y = 3,
+                    Y = 5,
                     Width = Dim.Percent(35),
                     ProgressBarStyle = ProgressBarStyle.Continuous,
                     ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage
@@ -93,21 +93,57 @@ namespace Tamagotchi
                 ProgressBar progressBarSleep = new ProgressBar()
                 {
                     X = Pos.Right(progressBarEat) + 10,
-                    Y = 3,
+                    Y = 5,
                     Width = Dim.Percent(35),
                     ProgressBarStyle = ProgressBarStyle.Continuous,
-                    ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage,
-                    Text = ustring.Make("Sleep"),
-                    TextAlignment = TextAlignment.Centered
-                    
+                    ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage
+                };
+
+                Label floor = new Label("--------------------------------------------------------------------------------------------------")
+                {
+                    X = 0,
+                    Y = 18,
+                    Width = Dim.Percent(100)
+                };
+
+                Label playLabel = new Label("Play")
+                {
+                    X = 10,
+                    Y = 1
+                };
+
+                Label playShower = new Label("Shower")
+                {
+                    X = Pos.Right(progressBarPlay) + 10,
+                    Y = 1
+                };
+
+                Label playEat = new Label("Eat")
+                {
+                    X = 10,
+                    Y = 4
+                };
+
+                Label playSleep = new Label("Sleep")
+                {
+                    X = Pos.Right(progressBarEat) + 10,
+                    Y = 4
                 };
 
                 Kitty kitty = new Kitty(progressBarPlay, progressBarShower, progressBarEat, progressBarSleep);
 
+                gameWindow.Add(kitty.KittyDraw());
                 gameWindow.Add(progressBarPlay);
                 gameWindow.Add(progressBarShower);
                 gameWindow.Add(progressBarEat); 
                 gameWindow.Add(progressBarSleep);
+                gameWindow.Add(playLabel);
+                gameWindow.Add(playShower);
+                gameWindow.Add(playEat);
+                gameWindow.Add(playSleep);
+                gameWindow.Add(floor);
+
+
 
                 Button backButton = new Button("Back")
                 {
@@ -127,12 +163,19 @@ namespace Tamagotchi
                     Y = 7
                 };
 
-                Button eatButton = new Button("Food")
+                Button eatButton = new Button("Eat")
                 {
                     X = 3,
                     Y = 11
                 };
 
+                eatButton.Clicked += () =>
+                {
+                    EatDialog eatDialog = new EatDialog("Food", 30, 10, kitty);
+                    gameWindow.Add(eatDialog);
+                    
+                };
+            
 
                 Button sleepButton = new Button("Sleep")
                 {
