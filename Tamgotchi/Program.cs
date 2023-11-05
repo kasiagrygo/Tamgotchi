@@ -42,8 +42,7 @@ namespace Tamagotchi
                 X = Pos.Center(),
                 Y = Pos.Bottom(about) + 1
             };
-
-
+            
             start.Clicked += () =>
             {
 
@@ -69,8 +68,8 @@ namespace Tamagotchi
                     X = 10,
                     Y = 1,
                     Width = Dim.Percent(35),
-                    
-                    
+                    ProgressBarStyle = ProgressBarStyle.Continuous,
+                    ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage
                 };
 
                 ProgressBar progressBarShower = new ProgressBar()
@@ -78,16 +77,17 @@ namespace Tamagotchi
                     X = Pos.Right(progressBarPlay) + 10,
                     Y = 1,
                     Width = Dim.Percent(35),
-                    
+                    ProgressBarStyle = ProgressBarStyle.Continuous,
+                    ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage
                 };
-
                 
                 ProgressBar progressBarEat = new ProgressBar()
                 {
                     X = 10,
                     Y = 3,
                     Width = Dim.Percent(35),
-                    
+                    ProgressBarStyle = ProgressBarStyle.Continuous,
+                    ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage
                 };
 
                 ProgressBar progressBarSleep = new ProgressBar()
@@ -95,17 +95,19 @@ namespace Tamagotchi
                     X = Pos.Right(progressBarEat) + 10,
                     Y = 3,
                     Width = Dim.Percent(35),
-                   
+                    ProgressBarStyle = ProgressBarStyle.Continuous,
+                    ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage,
+                    Text = ustring.Make("Sleep"),
+                    TextAlignment = TextAlignment.Centered
+                    
                 };
-                Kitty kitty = new Kitty(progressBarPlay);
 
-                progressBarPlay.Fraction = kitty.play;
+                Kitty kitty = new Kitty(progressBarPlay, progressBarShower, progressBarEat, progressBarSleep);
 
                 gameWindow.Add(progressBarPlay);
                 gameWindow.Add(progressBarShower);
                 gameWindow.Add(progressBarEat); 
-                gameWindow.Add(progressBarSleep);   
-                    
+                gameWindow.Add(progressBarSleep);
 
                 Button backButton = new Button("Back")
                 {
@@ -165,7 +167,6 @@ namespace Tamagotchi
 
             top.Add(mainWindow);
 
-            Application.MainLoop.AddTimeout(TimeSpan.FromMilliseconds(500), loop => true);
             
             Application.Run();
         }
