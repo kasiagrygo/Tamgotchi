@@ -11,6 +11,8 @@ namespace Tamgotchi
     internal class PlayDialog : Dialog
     {
         private int random {  get; set; }
+
+        private bool IsGameOver { get; set; } = false;
         public PlayDialog(string name, int width, int height, Kitty kitty) : base(name, width, height)
         {
             random = RandomNumber();
@@ -60,9 +62,10 @@ namespace Tamgotchi
                     {
                         label.Text = "Your number is too high";
                     }
-                    if (inputNumber == random)
+                    if (inputNumber == random && IsGameOver == false)
                     {
                         label.Text = "You win!!!";
+                        IsGameOver = true;
                         kitty.play = kitty.play + 0.3F > 1F ? 1F : kitty.play + 0.3F;
                     }
                 }
