@@ -1,5 +1,6 @@
 ﻿using NStack;
 using System;
+using System.ComponentModel;
 using System.Xml.Linq;
 using Tamgotchi;
 using Terminal.Gui;
@@ -15,8 +16,23 @@ namespace Tamagotchi
 
             var top = Application.Top;
 
-            
 
+
+            //mainWindow           
+            Label nameLabel = new Label(@"
+ 
+              ████████╗ █████╗ ███╗   ███╗ █████╗  ██████╗  ██████╗ ████████╗ ██████╗██╗  ██╗██╗
+              ╚══██╔══╝██╔══██╗████╗ ████║██╔══██╗██╔════╝ ██╔═══██╗╚══██╔══╝██╔════╝██║  ██║██║
+                 ██║   ███████║██╔████╔██║███████║██║  ███╗██║   ██║   ██║   ██║     ███████║██║
+                 ██║   ██╔══██║██║╚██╔╝██║██╔══██║██║   ██║██║   ██║   ██║   ██║     ██╔══██║██║
+                 ██║   ██║  ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝╚██████╔╝   ██║   ╚██████╗██║  ██║██║
+                 ╚═╝   ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝    ╚═════╝╚═╝  ╚═╝╚═╝
+            ")
+            {
+                X = 4,
+                Y = 0
+            };
+            
             Window mainWindow = new Window("Tamagotchi")
             {
                 X = 0,
@@ -42,9 +58,15 @@ namespace Tamagotchi
                 X = Pos.Center(),
                 Y = Pos.Bottom(about) + 1
             };
-            
+
+
+
+
+
+            //Button Start
             start.Clicked += () =>
             {
+                
 
                 Window optionsWindow = new Window("Options")
                 {
@@ -102,7 +124,7 @@ namespace Tamagotchi
                 Label floor = new Label("--------------------------------------------------------------------------------------------------")
                 {
                     X = 0,
-                    Y = 18,
+                    Y = 20,
                     Width = Dim.Percent(100)
                 };
 
@@ -145,10 +167,55 @@ namespace Tamagotchi
 
 
 
+                //Arrows
+                Button goLeft = new Button(@"Left")
+                {
+                    X = 38,
+                    Y = 22
+                };
+
+                Button goRight = new Button(@"Right")
+                {
+                    X = Pos.Right(goLeft) + 2,
+                    Y = 22
+                };
+
+       
+
+                goLeft.Clicked += () =>
+                {
+                    kitty.kittyLabel.X -= 3;
+                    Application.Refresh();
+
+                };
+
+                goRight.Clicked += () =>
+                {
+                    kitty.kittyLabel.X += 3;
+                    Application.Refresh();
+                };
+
+                gameWindow.Add(goLeft);
+                gameWindow.Add(goRight);
+
+
+
+
+                //Options Window Buttons
                 Button backButton = new Button("Back")
                 {
                     X = 3,
                     Y = 22
+                };
+
+                backButton.Clicked += () =>
+                {
+                    gameWindow.Visible = false;
+                    optionsWindow.Visible = false;
+
+                    Application.Refresh();
+
+                    mainWindow.Add(start, about, exit);
                 };
 
                 Button playButton = new Button("Play")
@@ -157,10 +224,24 @@ namespace Tamagotchi
                     Y = 3
                 };
 
+                playButton.Clicked += () =>
+                {
+                    PlayDialog playDialog = new PlayDialog("Game", 40, 10, kitty);
+                    gameWindow.Add(playDialog);
+
+                };
+
                 Button showerButton = new Button("Shower")
                 {
                     X = 2,
                     Y = 7
+                };
+
+                showerButton.Clicked += () =>
+                {
+                    ShowerDialog showerDialog = new ShowerDialog("Shower", 40, 10, kitty);
+                    gameWindow.Add(showerDialog);
+
                 };
 
                 Button eatButton = new Button("Eat")
@@ -183,16 +264,18 @@ namespace Tamagotchi
                     Y = 15
                 };
 
-
-                backButton.Clicked += () =>
+                sleepButton.Clicked += () =>
                 {
-                    gameWindow.Visible = false;
-                    optionsWindow.Visible = false;
-
-                    Application.Refresh();
-
-                    mainWindow.Add(start, about, exit);
+                    SleepDialog sleepDialog = new SleepDialog("Sleep", 40, 15, kitty);
+                    gameWindow.Add(sleepDialog);
+                    while (kitty.sleep < 0.99F)
+                    {
+                        Thread.Sleep(1000);
+                        kitty.sleep = kitty.sleep + 0.01F > 1F ? 1F : kitty.sleep + 0.01F;
+                    }
                 };
+
+
 
                 optionsWindow.Add(backButton);
                 optionsWindow.Add(playButton);
@@ -203,14 +286,18 @@ namespace Tamagotchi
                 mainWindow.Add(optionsWindow);
                 mainWindow.Add(gameWindow);
                 
+                
                 Application.Refresh();
             };
 
+
+
             mainWindow.Add(start, about, exit);
+            mainWindow.Add(nameLabel);
 
             top.Add(mainWindow);
 
-            
+           
             Application.Run();
         }
     }

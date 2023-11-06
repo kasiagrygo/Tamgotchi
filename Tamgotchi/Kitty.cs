@@ -10,6 +10,7 @@ namespace Tamgotchi
 {
     internal class Kitty
     {
+        public Label kittyLabel;
         public float play { get; set; }
         
         public float shower { get; set; }
@@ -23,13 +24,12 @@ namespace Tamgotchi
         private ProgressBar SleepBar { get; set; }
         public Kitty(ProgressBar playBar, ProgressBar showerBar, ProgressBar eatBar, ProgressBar sleepBar)
         {
-            //Ustawiamy domyślne wartości
+
             play = 1f; 
             shower = 1f; 
             eat = 1f; 
             sleep = 1f;
 
-            //Przypisujemy bary
             PlayBar = playBar;
             PlayBar.Fraction = play;
 
@@ -43,18 +43,25 @@ namespace Tamgotchi
             SleepBar.Fraction = sleep;
 
             Loop();
+            kittyLabel = KittyDraw();
         }
 
         public Label KittyDraw()
         {
-            Label kittyLabel = new Label(@"
-  ^~^
- ('Y') )
- /   \/
-(\|||/)")
+            kittyLabel = new Label(@"
+  _    _
+ |\\__//|
+ / _  _ |    ,--.
+(  @  @ )   / ,-'
+ \  _T_/-._( (
+ /         `. \
+|         _  \ |
+ \ \ ,  /      |
+  || |-_\__   /
+ ((_/`(____,-'")
             {
                 X = Pos.Center(),
-                Y = 13
+                Y = 9
             };
 
             return kittyLabel;
@@ -73,11 +80,24 @@ namespace Tamgotchi
                     shower -= 0.004f;
                     eat -= 0.007f;
                     sleep -= 0.001f;
+                    
+                    if (sleep <= 0F)
+                        sleep = 0F;
+                    if (play <= 0F)
+                        play = 0F;
+                    if (shower <= 0F)
+                        shower = 0F;
+                    if (eat <= 0F)
+                        eat = 0F;
+
 
                     PlayBar.Fraction = play;
                     ShowerBar.Fraction = shower;
                     EatBar.Fraction = eat;
                     SleepBar.Fraction = sleep;
+
+                    
+                  
 
                     try
                     {
