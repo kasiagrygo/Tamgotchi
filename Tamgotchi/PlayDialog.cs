@@ -28,7 +28,7 @@ namespace Tamgotchi
 
             Add(back);
 
-            Label label = new Label("Podaj liczbę z przedziału 1 do 99")
+            Label label = new Label("Please enter a number between 1 and 99")
             {
                 X = Pos.Center(),
                 Y = 1

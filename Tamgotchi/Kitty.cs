@@ -89,6 +89,7 @@ namespace Tamgotchi
                         shower = 0F;
                     if (eat <= 0F)
                         eat = 0F;
+                    
 
 
                     PlayBar.Fraction = play;

@@ -60,7 +60,58 @@ namespace Tamagotchi
             };
 
 
+            about.Clicked += () =>
+            {
+                Window aboutWindow = new Window()
+                {
+                    X = 0,
+                    Y = 1,
+                    Width = Dim.Fill(),
+                    Height = Dim.Fill()
+                };
 
+                mainWindow.Add(aboutWindow);
+
+                Label aboutLabel = new Label(@"
+                     Witaj w grze Tamagotchi
+
+         Znajdziesz tutaj najważniejsze informacje o grze.
+
+Twoim głównym zadaniem jest opieka nad kotkiem którego musisz karmić,
+myć, bawić się z nim oraz położyć do spania. Aby wykonać te czynności 
+z prawej strony ekranu masz przyciski odpowiadające za poszczególne 
+akcje. Obok masz ekran z paskami postępu każdej z czynności, które z 
+czasem maleją a poniżej znajduje się twój kotek. Dopilnuj żeby potrzeby 
+kotka zawsze były spełnione.")
+                {
+                    X = Pos.Center(),
+                    Y = Pos.Center()
+                };
+                aboutWindow.Add(aboutLabel);
+
+                Button backButton = new Button("Back")
+                {
+                    X = Pos.Center(),
+                    Y = 20
+                };
+
+                aboutWindow.Add(backButton);
+
+                backButton.Clicked += () =>
+                {
+                    aboutWindow.Visible = false;
+
+                    Application.Refresh();
+
+                    mainWindow.Add(start, about, exit);
+                };
+
+            };
+
+            exit.Clicked += () =>
+            {
+                Application.RequestStop();
+            };
 
 
             //Button Start
@@ -153,6 +204,10 @@ namespace Tamagotchi
                 };
 
                 Kitty kitty = new Kitty(progressBarPlay, progressBarShower, progressBarEat, progressBarSleep);
+                
+                
+                    
+                
 
                 gameWindow.Add(kitty.KittyDraw());
                 gameWindow.Add(progressBarPlay);
@@ -275,7 +330,7 @@ namespace Tamagotchi
                     }
                 };
 
-
+                
 
                 optionsWindow.Add(backButton);
                 optionsWindow.Add(playButton);
